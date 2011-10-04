@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>qooxdoo-java-tool</name>
-  <description>A standalone jar to build Qooxdoo apps with Java</description>
+  <description>Build Qooxdoo apps with Java</description>
   <url>http://maven.apache.org</url>
 
   <parent>
