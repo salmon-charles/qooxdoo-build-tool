@@ -1,0 +1,14 @@
+qooxdoo-java-tool
+=================
+
+The qooxdoo-java-tool builds a standalone jar for using the qooxdoo tool chain within java.
+
+******************************************************************
+GET STARTED: got to http//charless.org/todo
+******************************************************************
+
+To build the jar:
+
+$ git clone git://github.com/salmon-charles/qooxdoo-java-tool.git
+$ cd qooxdoo-java-tool
+$ mvn clean package

@@ -1,0 +1,5 @@
+#surefire
+#Mon Oct 03 16:49:59 CEST 2011
+user.dir=/home/charless/workspace/qooxdoo-java-tool
+localRepository=/home/charless/.m2/repository
+basedir=/home/charless/workspace/qooxdoo-java-tool
