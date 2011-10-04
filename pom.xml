@@ -16,6 +16,12 @@
     <artifactId>qooxdoo-maven-parent</artifactId>
     <version>1.5-SNAPSHOT</version>
   </parent>
+  
+  <scm>
+    <connection>scm:git:git://github.com/salmon-charles/qooxdoo-java-tool.git</connection>
+    <developerConnection>scm:git:git@github.com:salmon-charles/qooxdoo-java-tool.git</developerConnection>
+    <url>https://github.com/salmon-charles/qooxdoo-java-tool</url>
+  </scm>
 
   <build>
     <plugins>
