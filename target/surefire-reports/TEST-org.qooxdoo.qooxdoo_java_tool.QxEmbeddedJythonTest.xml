@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="2.471" errors="0" skipped="0" tests="2" name="org.qooxdoo.qooxdoo_java_tool.QxEmbeddedJythonTest">
+<testsuite failures="0" time="2.513" errors="0" skipped="0" tests="2" name="org.qooxdoo.qooxdoo_java_tool.QxEmbeddedJythonTest">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/i386"/>
@@ -19,14 +19,14 @@
     <property name="basedir" value="/home/charless/workspace/qooxdoo-java-tool"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-6-openjdk/jre/lib/endorsed"/>
     <property name="os.arch" value="i386"/>
-    <property name="surefire.real.class.path" value="/home/charless/workspace/qooxdoo-java-tool/target/surefire/surefirebooter894383495563566028.jar"/>
+    <property name="surefire.real.class.path" value="/tmp/surefirebooter3892354236146195399.jar"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
 "/>
     <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="os.name" value="Linux"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/i386/server:/usr/lib/jvm/java-6-openjdk/jre/lib/i386:/usr/lib/jvm/java-6-openjdk/jre/../lib/i386:/opt/jdk1.6.0_24/jre/lib/i386/server:/opt/jdk1.6.0_24/jre/lib/i386:/opt/jdk1.6.0_24/jre/../lib/i386:/usr/java/packages/lib/i386:/usr/lib/i386-linux-gnu/jni:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.library.path" value="/usr/lib/jvm/java-6-openjdk/jre/lib/i386/server:/usr/lib/jvm/java-6-openjdk/jre/lib/i386:/usr/lib/jvm/java-6-openjdk/jre/../lib/i386:/usr/java/packages/lib/i386:/usr/lib/i386-linux-gnu/jni:/lib/i386-linux-gnu:/usr/lib/i386-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
     <property name="surefire.test.class.path" value="/home/charless/workspace/qooxdoo-java-tool/target/test-classes:/home/charless/workspace/qooxdoo-java-tool/target/classes:/home/charless/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar:/home/charless/.m2/repository/org/python/jython-standalone/2.5.2/jython-standalone-2.5.2.jar:"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="50.0"/>
@@ -43,7 +43,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="32"/>
     <property name="java.home" value="/usr/lib/jvm/java-6-openjdk/jre"/>
-    <property name="sun.java.command" value="/home/charless/workspace/qooxdoo-java-tool/target/surefire/surefirebooter894383495563566028.jar /home/charless/workspace/qooxdoo-java-tool/target/surefire/surefire1337072493961602000tmp /home/charless/workspace/qooxdoo-java-tool/target/surefire/surefire3046791242902355696tmp"/>
+    <property name="sun.java.command" value="/tmp/surefirebooter3892354236146195399.jar /tmp/surefire8281666821292827974tmp /tmp/surefire1355636863817051687tmp"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="en"/>
     <property name="java.vm.info" value="mixed mode"/>
@@ -61,6 +61,6 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="2.46" classname="org.qooxdoo.qooxdoo_java_tool.QxEmbeddedJythonTest" name="testRun"/>
+  <testcase time="2.497" classname="org.qooxdoo.qooxdoo_java_tool.QxEmbeddedJythonTest" name="testRun"/>
   <testcase time="0" classname="org.qooxdoo.qooxdoo_java_tool.QxEmbeddedJythonTest" name="testHelp"/>
 </testsuite>
