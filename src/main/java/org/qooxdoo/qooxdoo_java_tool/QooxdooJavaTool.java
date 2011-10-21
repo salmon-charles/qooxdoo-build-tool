@@ -2,11 +2,21 @@ package org.qooxdoo.qooxdoo_java_tool;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+
+import jline.ConsoleReader;
+
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.util.InteractiveConsole;
+import org.python.util.PythonInterpreter;
 
 
 /**
@@ -18,8 +28,10 @@ import javax.script.ScriptException;
 public class QooxdooJavaTool  {
 	
 	public static Map<String,String> actions = new TreeMap<String,String>() {{
+		put("console", "Launch the qooxdoo jython console");
 		put("new-gui", "create-application.py -t gui -n $ARG1");
-		put("compile", "generator.py -c $ARG1/config.json build");
+		put("compile", "generator.py -c ./config.json build");
+		
 	}};
 	
 	public static File qooxdooSdkPath;
@@ -27,15 +39,24 @@ public class QooxdooJavaTool  {
 	public static void main(String[] args) throws ScriptException {
 		// Resolve Qooxdoo Sdk path
 		qooxdooSdkPath = resolveQooxdooSdkPath();
-		System.out.println("QOOXDOO_PATH="+qooxdooSdkPath.getAbsolutePath());
 		if (qooxdooSdkPath == null) {
 			throw new ScriptException(
 					"Can not find Qooxdoo sdk path; use the \'qooxdoo.sdk\' property or set the \'QOOXDOO_PATH\' environment variable");
 		}
+		System.out.println("QOOXDOO_PATH="+qooxdooSdkPath.getAbsolutePath());
 		// Parse args
 		if (args.length ==0) {
 			help();
 			System.exit(1);
+		}
+		// buildin actions
+		if ("console".equals(args[0])) {
+			System.out.println("Launching qooxdoo jyhon console...");
+			String [] pythonScriptArgs = new String[args.length-1];
+			for (int i=1;i<args.length;i++) {
+				pythonScriptArgs[i-1] = args[i];
+			}
+			System.exit(console(pythonScriptArgs));
 		}
 		// Handles shortcuts
 		if (actions.containsKey(args[0])) {
@@ -63,7 +84,6 @@ public class QooxdooJavaTool  {
 					+"\' does not exist or is not readable !"
 			);
 			System.out.println();
-			help();
 			System.exit(1);
 		}
 		long starts = System.currentTimeMillis();
@@ -131,6 +151,7 @@ public class QooxdooJavaTool  {
 		String[] qxSdkDirs = currentDirectory.list( new QxSdkFilter() );
 		for (String dir: qxSdkDirs) {
 			qooxdooSdkPath = new File(dir);
+			// TDODO: Get QOOXDOO_PATH from config.json if it exists
 			if (qooxdooSdkPath.exists() && qooxdooSdkPath.isDirectory()) {
 				System.out.println("[INFO] Found a qooxdoo sdk directory from current dir");
 				return qooxdooSdkPath;
@@ -144,13 +165,14 @@ public class QooxdooJavaTool  {
 		System.out.println("********************************************");
 		System.out.println("* QooxdooJavaTool                          *");
 		System.out.println("********************************************");
+		System.out.println("QooxdooJavaTool console [generator_options]");
+		System.out.println("QooxdooJavaTool <action> [options]");
 		System.out.println("QooxdooJavaTool <pythonScriptName> [options]");
-		System.out.println("QooxdooJavaTool <shortcut> <applicationName>");
 		
 		// List possible actions
 		System.out.println();
-		System.out.println("Available shortcuts");
-		System.out.println("===================");
+		System.out.println("Available actions");
+		System.out.println("=================");
 		for (Map.Entry<String,String> entry : actions.entrySet()) {
 			System.out.println(" * "+entry.getKey()+" = "+entry.getValue());
 		}
@@ -182,8 +204,34 @@ public class QooxdooJavaTool  {
 		System.out.println();
 		System.out.println("Examples");
 		System.out.println("========");
+		System.out.println("* Create a qooxdoo gui application");
+		System.out.println("    QooxdooJavaTool new-gui appname");
+		System.out.println("* Compile a qooxdoo application (from it's root directory)");
+		System.out.println("    QooxdooJavaTool generator.py build");
+		System.out.println("or by using the interactive console:");
+		System.out.println("    QooxdooJavaTool console");
+		System.out.println("    >>> build()");
+
+
+		
 		
 		
 	}
+	
+	public static int console(String[] args) {
+		try {
+			QxEmbeddedJython qxjython = new QxEmbeddedJython(qooxdooSdkPath);
+			InteractiveConsole c = qxjython.getQxInteractiveConsole(args);
+			c.interact();
+		} catch(Exception e) {
+			System.out.println(e);
+			return(1);
+		}
+		return(0);
+		
+	}
+	
+	
+
 }
 

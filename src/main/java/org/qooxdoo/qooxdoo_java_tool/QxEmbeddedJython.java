@@ -23,6 +23,7 @@ import org.python.util.PythonInterpreter;
 public class QxEmbeddedJython {
 
 	protected InteractiveConsole c;
+
 	protected File qooxdooSdk;
 
 	public static String qooxdooSdkPath = new File(".","qooxdoo-sdk").getPath();
@@ -54,6 +55,12 @@ public class QxEmbeddedJython {
 
 	public void run(String pythonScriptName, String [] args) throws ScriptException {
 		File pythonScript = resolvePythonScriptPath(this.qooxdooSdk,pythonScriptName);
+		this.setArgs(pythonScriptName, args);
+		this.c.execfile(pythonScript.getAbsolutePath());
+	}
+	
+	public void setArgs(String pythonScriptName, String [] args) throws ScriptException {
+		File pythonScript = resolvePythonScriptPath(this.qooxdooSdk,pythonScriptName);
 		if (! pythonScript.exists() || ! pythonScript.canRead()) {
 			throw new ScriptException(
 					"The python script \'"
@@ -68,7 +75,6 @@ public class QxEmbeddedJython {
 			for (String arg: args) {
 				systemState.argv.append (new PyString (arg));
 			}
-			this.c.execfile(pythonScript.getAbsolutePath());
 		} catch (Exception e) {
 			throw new ScriptException(e);
 		}
@@ -109,9 +115,33 @@ public class QxEmbeddedJython {
 		return new JLineConsole();
 	}
 	
+	/**
+	 * Return an interactive console, with the qooxdoo python console module (qonsole.py) loaded
+	 * Use the return console to directly launch qooxdoo build jobs
+	 * 
+	 * Example to launch a jython console from java:
+	 *   QxEmbeddedJython qxjython = new QxEmbeddedJython(qooxdooSdkPath);
+	 *	 InteractiveConsole c = qxjython.getInteractiveConsole
+	 *	 c.interact()
+	 * @return
+	 */
+	public InteractiveConsole getQxInteractiveConsole(String[] args) throws ScriptException {
+		this.setArgs("generator.py",args);
+		c.exec("from qonsole import qxjavainit");
+		c.exec("qxjavainit()");
+		c.exec("from qonsole import *");
+		c.exec("qonsole()");
+		return c;
+	}
+	
 	public PythonInterpreter getPyInterpreter() {
 		return new PythonInterpreter(Py.getSystemState().__dict__, Py.getSystemState());
 	}
+	
+	public InteractiveConsole getInteractiveConsole() {
+		return c;
+	}
+
 
 }
 

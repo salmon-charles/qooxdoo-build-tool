@@ -39,7 +39,7 @@
         </executions>
         <configuration>
           <libraries>
-            <param>nose</param>
+            <param>nose</param> 
           </libraries>
         </configuration>
       </plugin>
