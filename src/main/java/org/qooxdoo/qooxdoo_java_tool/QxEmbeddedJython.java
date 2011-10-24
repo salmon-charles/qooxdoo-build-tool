@@ -123,7 +123,6 @@ public class QxEmbeddedJython {
 	 *   QxEmbeddedJython qxjython = new QxEmbeddedJython(qooxdooSdkPath);
 	 *	 InteractiveConsole c = qxjython.getInteractiveConsole
 	 *	 c.interact()
-	 * @return
 	 */
 	public InteractiveConsole getQxInteractiveConsole(String[] args) throws ScriptException {
 		this.setArgs("generator.py",args);

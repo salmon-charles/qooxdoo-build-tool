@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.qooxdoo</groupId>
-  <artifactId>qooxdoo-java-tool</artifactId>
+  <artifactId>qooxdoo-build-tool</artifactId>
   <version>1.4</version>
   <packaging>jar</packaging>
 
@@ -84,6 +84,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.4</version>
         <executions>
           <execution>
             <id>sign-artifacts</id>
