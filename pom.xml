@@ -3,7 +3,7 @@
 
   <groupId>org.qooxdoo</groupId>
   <artifactId>qooxdoo-build-tool</artifactId>
-  <version>1.4</version>
+  <version>1.4-alpha</version>
   <packaging>jar</packaging>
 
   <name>qooxdoo-java-tool</name>
@@ -22,7 +22,23 @@
     <url>https://github.com/salmon-charles/qooxdoo-java-tool</url>
   </scm>
 
+<!--   <distributionManagement> -->
+<!--     <repository> -->
+<!--       <id>ftp-charless</id> -->
+<!--       <url>ftp://downloads.charless.org</url> -->
+<!--     </repository> -->
+<!--   </distributionManagement> -->
+  
   <build>
+     <extensions>
+      <!-- Enabling the use of FTP -->
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+         <artifactId>wagon-ftp</artifactId>
+         <version>1.0-beta-6</version>
+      </extension>
+      </extensions>
+       
     <plugins>
       <plugin>
         <groupId>net.sf.mavenjython</groupId>
@@ -42,16 +58,18 @@
           </libraries>
         </configuration>
       </plugin>
-
-      <plugin>
+      
+            <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
+          <descriptors>
+            <descriptor>src/main/resources/assemblies/qbt.xml</descriptor>
+            <descriptor>src/main/resources/assemblies/distrib-linux.xml</descriptor>
+            <descriptor>src/main/resources/assemblies/distrib-win.xml</descriptor>
+          </descriptors>
           <archive>
             <manifest>
-              <mainClass>org.qooxdoo.qooxdoo_java_tool.QooxdooJavaTool</mainClass>
+              <mainClass>org.qooxdoo.charless.buildtool.QooxdooBuildTool</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -65,10 +83,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
+  
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -95,6 +110,29 @@
           </execution>
         </executions>
       </plugin>
+
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>wagon-maven-plugin</artifactId>
+      <version>1.0-beta-3</version>
+      <executions>
+        <execution>
+          <id>upload-distrib</id>
+          <phase>deploy</phase>
+          <goals>
+            <goal>upload</goal>
+          </goals>
+          <configuration>
+            <fromDir>./target</fromDir>
+            <includes>${artifactId}-${version}-distrib-*.zip</includes>
+            <toDir>./</toDir>
+            <url>ftp://charless.org/downloads</url> 
+            <serverId>ftp-charless</serverId>
+          </configuration>
+          </execution>
+        </executions>
+        </plugin>
     </plugins>
   </build>
 

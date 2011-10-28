@@ -1,4 +1,4 @@
-package org.qooxdoo.qooxdoo_java_tool;
+package org.qooxdoo.charless.buildtool;
 
 import java.io.File;
 import java.util.Properties;
@@ -117,11 +117,10 @@ public class QxEmbeddedJython {
 	
 	/**
 	 * Return an interactive console, with the qooxdoo python console module (qonsole.py) loaded
-	 * Use the return console to directly launch qooxdoo build jobs
 	 * 
 	 * Example to launch a jython console from java:
 	 *   QxEmbeddedJython qxjython = new QxEmbeddedJython(qooxdooSdkPath);
-	 *	 InteractiveConsole c = qxjython.getInteractiveConsole
+	 *	 InteractiveConsole c = qxjython.getQxInteractiveConsole
 	 *	 c.interact()
 	 */
 	public InteractiveConsole getQxInteractiveConsole(String[] args) throws ScriptException {
@@ -137,9 +136,6 @@ public class QxEmbeddedJython {
 		return new PythonInterpreter(Py.getSystemState().__dict__, Py.getSystemState());
 	}
 	
-	public InteractiveConsole getInteractiveConsole() {
-		return c;
-	}
 
 
 }
