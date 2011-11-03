@@ -27,6 +27,7 @@
 # _setOptions(), _intitialize() and _jobs()
 
 import sys, os, optparse, string, types, pprint
+import time
 import qxenviron
 from misc.ExtendAction import ExtendAction
 from generator import Context
@@ -242,7 +243,10 @@ def listOptions():
 
 def jobs(jobs):
     jobs = jobs.split(',')
+    start_time = time.time()
     _jobs(jobs)    
+    elapsed_time = time.time() - start_time
+    console.info(u"Jobs: %s done in %.2f seconds" % (jobs,elapsed_time))
 
 def main():
     _setOptions()

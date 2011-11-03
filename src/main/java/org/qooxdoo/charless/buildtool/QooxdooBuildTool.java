@@ -2,21 +2,14 @@ package org.qooxdoo.charless.buildtool;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.InputStreamReader;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import jline.ConsoleReader;
-
-import org.python.core.PyObject;
-import org.python.core.PyString;
+import org.apache.log4j.Logger;
 import org.python.util.InteractiveConsole;
-import org.python.util.PythonInterpreter;
+import org.qooxdoo.charless.buildtool.config.Config;
+import org.qooxdoo.charless.buildtool.config.QbtConfig;
 
 
 /**
@@ -28,26 +21,40 @@ import org.python.util.PythonInterpreter;
 public class QooxdooBuildTool  {
 	
 	public static File qooxdooSdkPath;
+    private final static Logger logger = Logger.getLogger(QbtConfig.class);
+
 	
 	public static void main(String[] args) throws ScriptException {
-		// Resolve Qooxdoo Sdk path
-		qooxdooSdkPath = resolveQooxdooSdkPath();
+		// Init config
+		QbtConfig cfg = QbtConfig.init();
+		qooxdooSdkPath = new File(cfg.getQooxdooPath());
 		if (qooxdooSdkPath == null) {
-			System.out.println(
-					"[ERROR] Can not find Qooxdoo sdk path; set the \'QOOXDOO_PATH\' environment variable"
+			logger.error(
+					"Can not find Qooxdoo sdk path; set the \'QOOXDOO_PATH\' environment variable"
 			);	
 			System.exit(1);
 		}
-		System.out.println("QOOXDOO_PATH="+qooxdooSdkPath.getAbsolutePath());
+		if (! qooxdooSdkPath.isDirectory()) {
+			logger.error(
+					"Qooxdoo path \'"+qooxdooSdkPath.getAbsolutePath()+"\' is not a directory or does not exists"
+			);	
+			System.exit(1);
+		}
+		if (! Config.isaQxApplicationDirectory(new File("."))) { 
+			try {
+				cfg.write();
+			} catch (Exception e) {
+				logger.warn("Could not write configuration in file \'"+QbtConfig.QBT_JSON_FILE+"\':"+e);
+			}
+		}
 		// Parse args
 		if (args.length ==0 || args[0].startsWith("-")) {
 			// Console must be started from an app root
-			File configJson = new File("./config.json");
-			if (! configJson.exists()) {
-				System.out.println(
-						"[ERROR] Could not find the \'config.json\' file; the console must be launched from a qooxdoo application root directory"
+			if (! Config.isaQxApplicationDirectory(new File("."))) { 
+				logger.error(
+						"Could not find the \'"+Config.APPLICATION_JSON_FILE+"\' file; the console must be launched from a qooxdoo application root directory"
 				);
-				System.out.println("Type \'qbt help\' for getting started");
+				logger.info("Type \'qbt help\' for getting started");
 				System.exit(1);
 			}
 			System.exit(console(args));
@@ -82,21 +89,20 @@ public class QooxdooBuildTool  {
 		// Check script existence
 		File pythonScript = QxEmbeddedJython.resolvePythonScriptPath(qooxdooSdkPath,pythonScriptName);
 		if (! pythonScript.exists() || ! pythonScript.canRead()) {
-			System.out.println(
-					"[ERROR] The python script \'"
+			logger.error(
+					"The python script \'"
 					+ pythonScript.getAbsolutePath()
 					+"\' does not exist or is not readable !"
 			);
-			System.out.println();
 			System.exit(1);
 		}
 		long starts = System.currentTimeMillis();
-		System.out.print("[INFO] Initializing Jython...");
+		logger.info("Initializing Jython...");
 		QxEmbeddedJython qx = new QxEmbeddedJython(qooxdooSdkPath);
         long passedTimeInSeconds = TimeUnit.SECONDS.convert(System.currentTimeMillis() - starts, TimeUnit.MILLISECONDS);
-        System.out.println(" done (in "+passedTimeInSeconds+" seconds)");
+        logger.info("Jython initialized in "+passedTimeInSeconds+" seconds");
         starts = System.currentTimeMillis();
-		System.out.println("[INFO] Running \'"+pyScriptWithArgs+"\'");
+		logger.info("Starting \'"+pyScriptWithArgs+"\'");
 		try {
 			qx.run(pythonScriptName,args);
 		} catch (Exception e) {
@@ -104,69 +110,13 @@ public class QooxdooBuildTool  {
 			// TODO: Add a java property to turn stack trace on
 		}
         passedTimeInSeconds = TimeUnit.SECONDS.convert(System.currentTimeMillis() - starts, TimeUnit.MILLISECONDS);
-        System.out.println("[INFO] DONE ! (in "+passedTimeInSeconds+" seconds)");
+        logger.info("DONE in "+passedTimeInSeconds+" seconds");
 	}
-		
-	/**
-	 * Resolve the path to the Qooxdoo Sdk
-	 * In order:
-	 *  - Get the path from the "qooxdoo.path" property
-	 *  - Get the path from the QOOXDOO_PATH environment variable
-	 *  - Resolve the path to current_dir/qooxdoo_sdk
-	 */
-	public static File resolveQooxdooSdkPath() {
-		File qooxdooSdkPath;
-		// Get path from property
-		String qooxdooPathProperty = System.getProperty("qooxdoo.path");
-		if (qooxdooPathProperty != null ) {
-			qooxdooSdkPath = new File(qooxdooPathProperty);
-			if (qooxdooSdkPath.exists() && qooxdooSdkPath.isDirectory()) {
-				System.out.println("[INFO] Qooxdoo path resolved from property \'qooxdoo.path\'");
-				return qooxdooSdkPath;
-			} else {
-				System.out.println("[WARN] Path \'"+qooxdooSdkPath.getAbsolutePath()+"\' does not exists or is not a directory");
-			}
-		}
-		// Get path from env
-		String qooxdooPathEnv = System.getenv().get("QOOXDOO_PATH");
-		if (qooxdooPathEnv != null ) {
-			qooxdooSdkPath = new File(qooxdooPathEnv);
-			if (qooxdooSdkPath.exists() && qooxdooSdkPath.isDirectory()) {
-				System.out.println("[INFO] Qooxdoo path resolved from environment variable \'QOOXDOO_PATH\'");
-				return qooxdooSdkPath;
-			} else {
-				System.out.println("[WARN] Path \'"+qooxdooSdkPath.getAbsolutePath()+"\' does not exists or is not a directory");
-			}
-		}
-		// Default
-		class QxSdkFilter implements FilenameFilter
-		{
-		   public boolean accept ( File dir, String name ) {
-		      if (	new File( dir, name ).isDirectory() 
-		    		  && name.toLowerCase().startsWith("qooxdoo")
-		    		  && name.toLowerCase().endsWith("sdk") ) 
-		      {
-		         return true;
-		      }
-		      return false;
-		   }
-		}
-		File currentDirectory = new File( "." );
-		String[] qxSdkDirs = currentDirectory.list( new QxSdkFilter() );
-		for (String dir: qxSdkDirs) {
-			qooxdooSdkPath = new File(dir);
-			// TDODO: Get QOOXDOO_PATH from config.json if it exists
-			if (qooxdooSdkPath.exists() && qooxdooSdkPath.isDirectory()) {
-				System.out.println("[INFO] Found a qooxdoo sdk directory from current dir");
-				return qooxdooSdkPath;
-			} 
-		}
-		System.out.println("[ERROR] Can't resolve Qooxdoo Sdk path !");
-		return null;
-	}
-	
+			
 	public static void help () {
-		System.out.println("qOOXDOO bUILD tOOL");
+		System.out.println("====================");
+		System.out.println(" qOOXDOO bUILD tOOL");
+		System.out.println("====================");
 		System.out.println();
 		System.out.println("NEW PROJECT");
 		System.out.println("    $ qbt create-application -t <type> -n <appName> [other_options]");
@@ -198,7 +148,7 @@ public class QooxdooBuildTool  {
 	}
 	
 	public static int console(String[] args) {
-		System.out.print("[INFO] Entering interactive console, please wait...");
+		logger.info("Entering interactive console, please wait...");
 		try {
 			QxEmbeddedJython qxjython = new QxEmbeddedJython(qooxdooSdkPath);
 			InteractiveConsole c = qxjython.getQxInteractiveConsole(args);
