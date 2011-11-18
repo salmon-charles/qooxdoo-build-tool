@@ -6,9 +6,9 @@
   <version>1.4-alpha</version>
   <packaging>jar</packaging>
 
-  <name>qooxdoo-java-tool</name>
+  <name>qbt - qooxdoo build tool</name>
   <description>Build Qooxdoo apps with Java</description>
-  <url>http://maven.apache.org</url>
+  <url>http://qxmaven.charless.org/doku.php?id=artifacts:qooxdoo-build-tool:start</url>
 
   <parent>
     <groupId>org.qooxdoo</groupId>
@@ -17,9 +17,9 @@
   </parent>
   
   <scm>
-    <connection>scm:git:git://github.com/salmon-charles/qooxdoo-java-tool.git</connection>
-    <developerConnection>scm:git:git@github.com:salmon-charles/qooxdoo-java-tool.git</developerConnection>
-    <url>https://github.com/salmon-charles/qooxdoo-java-tool</url>
+    <connection>scm:git:git://github.com/salmon-charles/qooxdoo-build-tool.git</connection>
+    <developerConnection>scm:git:git@github.com:salmon-charles/qooxdoo-build-tool.git</developerConnection>
+    <url>https://github.com/salmon-charles/qooxdoo-build-tool</url>
   </scm>
 
 <!--   <distributionManagement> -->
