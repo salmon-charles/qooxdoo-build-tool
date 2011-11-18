@@ -27,7 +27,7 @@ public class QooxdooBuildTool  {
 	public static void main(String[] args) throws ScriptException {
 		// Init config
 		QbtConfig cfg = QbtConfig.init();
-		qooxdooSdkPath = new File(cfg.getQooxdooPath());
+		qooxdooSdkPath = cfg.getQooxdooPath() == null ? null : new File(cfg.getQooxdooPath()) ;
 		if (qooxdooSdkPath == null) {
 			logger.error(
 					"Can not find Qooxdoo sdk path; set the \'QOOXDOO_PATH\' environment variable"
