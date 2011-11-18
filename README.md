@@ -1,6 +1,6 @@
 [Setup]: http://qxmaven.charless.org/doku.php?id=artifacts:qooxdoo-build-tool:setup
-[QxDownloqd]: http://qooxdoo.org/download
-[qbt] http://qxmaven.charless.org/doku.php?id=artifacts:qooxdoo-build-tool:start
+[qooxdoo download page]: http://qooxdoo.org/download
+[qbt home page]: http://qxmaven.charless.org/doku.php?id=artifacts:qooxdoo-build-tool:start
 
 # qbt - Qooxdoo Build Tool
 
@@ -14,7 +14,7 @@ It is shipped with an interactive qooxdoo-jython console (REPL), to build and ma
 
 1. Install a binary release of qbt (see [Setup])
 
-2. Download a qooxdoo sdk (see [QxDownload])
+2. Download a qooxdoo sdk (see [qooxdoo download page])
 
 3. Create an application, run build jobs
 
@@ -23,4 +23,4 @@ It is shipped with an interactive qooxdoo-jython console (REPL), to build and ma
 			$ cd myRiaApp
 			$ qbt "build, test, api"
 			
-Visit the [qbt] project page for full documentation.
+Visit the [qbt home page] project page for full documentation.
