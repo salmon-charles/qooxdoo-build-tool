@@ -68,6 +68,22 @@ public class Config {
 		this.let.put("QOOXDOO_PATH",qooxdooPath);
 	}
 	
+	public String getApplication() {
+		return (String)this.let("APPLICATION");
+	}
+	
+	public String getQxTheme() {
+		return (String)this.let("QXTHEME");
+	}
+	
+	public String getCache() {
+		return (String)this.let("CACHE");
+	}
+	
+	public String getRoot() {
+		return (String)this.let("ROOT");
+	}
+	
 	@SuppressWarnings(value = { "unchecked", "unused" })
 	private void setLet(Object o) {
 		let = (LinkedHashMap<String,Object>) o;
