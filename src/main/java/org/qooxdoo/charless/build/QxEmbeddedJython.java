@@ -1,4 +1,4 @@
-package org.qooxdoo.charless.buildtool;
+package org.qooxdoo.charless.build;
 
 import java.io.File;
 import java.util.Properties;

@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "qooxdoo.application.name",
+
+    "summary" : "qooxdoo.application.summary",
+    "description" : "qooxdoo.application.description",
+    
+    "homepage" : "http://some.homepage.url/",
+
+    "license" : "SomeLicense",
+    "authors" : 
+    [
+      {
+        "name" : "First Author (uid)",
+        "email" : "first.author@some.domain"
+      }
+    ],
+
+    "version" : "0.1",
+    "qooxdoo-versions": ["1.4"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "qooxdoo.application.namespace",
+    "encoding"    : "project.build.sourceEncoding",
+    "class"       : "qooxdoo.application.sourceDirectory",
+    "resource"    : "qooxdoo.application.resourcesDirectory",
+    "translation" : "qooxdoo.application.translationDirectory",
+    "type"        : "application"
+  }
+}
+

@@ -1,4 +1,4 @@
-package org.qooxdoo.charless.buildtool;
+package org.qooxdoo.charless.build;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -8,8 +8,8 @@ import javax.script.ScriptException;
 
 import org.apache.log4j.Logger;
 import org.python.util.InteractiveConsole;
-import org.qooxdoo.charless.buildtool.config.Config;
-import org.qooxdoo.charless.buildtool.config.QbtConfig;
+import org.qooxdoo.charless.build.config.Config;
+import org.qooxdoo.charless.build.config.QbtConfig;
 
 
 /**

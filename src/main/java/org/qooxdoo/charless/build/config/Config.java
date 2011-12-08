@@ -1,4 +1,4 @@
-package org.qooxdoo.charless.buildtool.config;
+package org.qooxdoo.charless.build.config;
 
 import java.io.File;
 import java.util.LinkedHashMap;

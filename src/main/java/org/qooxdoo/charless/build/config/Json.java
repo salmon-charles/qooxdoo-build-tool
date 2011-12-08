@@ -1,4 +1,4 @@
-package org.qooxdoo.charless.buildtool.config;
+package org.qooxdoo.charless.build.config;
 
 import org.codehaus.jackson.map.ObjectMapper;
 

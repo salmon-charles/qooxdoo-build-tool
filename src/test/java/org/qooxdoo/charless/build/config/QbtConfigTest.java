@@ -1,8 +1,10 @@
-package org.qooxdoo.charless.buildtool.config;
+package org.qooxdoo.charless.build.config;
 
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.qooxdoo.charless.build.config.QbtConfig;
 
 
 import junit.framework.TestCase;

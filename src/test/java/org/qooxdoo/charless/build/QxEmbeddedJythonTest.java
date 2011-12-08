@@ -1,4 +1,4 @@
-package org.qooxdoo.qooxdoo_java_tool;
+package org.qooxdoo.charless.build;
 
 import java.io.File;
 import java.util.Properties;
@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.InteractiveConsole;
-import org.qooxdoo.charless.buildtool.QxEmbeddedJython;
+import org.qooxdoo.charless.build.QxEmbeddedJython;
 
 public class QxEmbeddedJythonTest extends TestCase {
 	
