@@ -106,7 +106,7 @@ public class Manifest {
 	}
 	
 	@SuppressWarnings(value = { "unchecked", "unused" })
-	private void setInfos(Object o) {
+	private void setInfo(Object o) {
 		info = (LinkedHashMap<String,Object>) o;
 	}
 	

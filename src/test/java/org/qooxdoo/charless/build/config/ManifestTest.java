@@ -46,7 +46,7 @@ public class ManifestTest extends TestCase {
 			put("type"        , "application");
 		}};
 		for (String key: expected.keySet()) {
-			assertEquals(expected.get(key),(String)m.info(key));
+			assertEquals(expected.get(key),(String)m.provides(key));
 		}
 		// Shortcuts
 		assertEquals(expected.get("namespace"),m.getNamespace());
