@@ -3,7 +3,7 @@
 
   <groupId>org.qooxdoo</groupId>
   <artifactId>qooxdoo-build-tool</artifactId>
-  <version>1.4-SNAPSHOT</version>
+  <version>1.4</version>
   <packaging>jar</packaging>
 
   <name>qbt - qooxdoo build tool</name>
