@@ -3,7 +3,7 @@
 
   <groupId>org.qooxdoo</groupId>
   <artifactId>qooxdoo-build-tool</artifactId>
-  <version>1.4-alpha</version>
+  <version>1.4</version>
   <packaging>jar</packaging>
 
   <name>qbt - qooxdoo build tool</name>
@@ -125,7 +125,7 @@
           </goals>
           <configuration>
             <fromDir>./target</fromDir>
-            <includes>${artifactId}-${version}-distrib-*.zip</includes>
+            <includes>${project.artifactId}-${project.version}-distrib-*.zip</includes>
             <toDir>./</toDir>
             <url>ftp://charless.org/downloads</url> 
             <serverId>ftp-charless</serverId>
